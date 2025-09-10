@@ -3,8 +3,14 @@ import ProductData from "./ProductData.mjs";
 
 const dataSource = new ProductData("tents");
 
-const response = await fetch("../json/tents.json");
-const productsData = await response.json();
+let productsData = "";
+
+async function loadData() {
+  const response = await fetch("../json/tents.json");
+  productsData = await response.json();
+}
+
+loadData();
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("productId");
