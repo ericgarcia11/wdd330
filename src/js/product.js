@@ -3,22 +3,21 @@ import ProductData from "./ProductData.mjs";
 
 const dataSource = new ProductData("tents");
 
-let productsData = "";
-
-async function loadData() {
-  const response = await fetch("../json/tents.json");
-  productsData = await response.json();
-}
-
-loadData();
-
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("productId");
 
-productsData.forEach(product => {
+dataSource.getData().then((productsData) => {
+  // eslint-disable-next-line no-console
+  productsData.forEach(product => {
     if (product.Id == productId){
       createProduct(product);
+
+      // add listener to Add to Cart button
+      document
+        .getElementById("addToCart")
+        .addEventListener("click", addToCartHandler);
     }
+  });
 });
 
 function createProduct(product){
@@ -68,11 +67,5 @@ async function addToCartHandler(e) {
   const product = await dataSource.findProductById(e.target.dataset.id);
   addProductToCart(product);
 }
-
-// add listener to Add to Cart button
-document
-  .getElementById("addToCart")
-  .addEventListener("click", addToCartHandler);
-
 
 
