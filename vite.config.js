@@ -12,10 +12,10 @@ export default defineConfig({
         cart: resolve(__dirname, "src/cart/index.html"),
         checkout: resolve(__dirname, "src/checkout/index.html"),
         product: resolve(__dirname, "src/product_pages/product_page.html"),
-        product1: resolve(
-          __dirname,
-          "src/product_pages/cedar-ridge-rimrock-2.html",
-        ),
+        // product1: resolve(
+        //   __dirname,
+        //   "src/product_pages/cedar-ridge-rimrock-2.html",
+        // ),
         // product2: resolve(
         //   __dirname, 
         //   "src/product_pages/marmot-ajax-3.html"),
