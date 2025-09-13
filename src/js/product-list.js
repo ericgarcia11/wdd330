@@ -2,7 +2,7 @@
 const template = document.getElementById("product-list-template");
 const contaier = document.getElementById("product-list-container");
 
-fetch("json/tents.json")
+fetch("/json/tents.json")
     .then(response => response.json())
     .then(data => {
         console.log(data);
