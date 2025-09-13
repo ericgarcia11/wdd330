@@ -62,7 +62,27 @@
 
       <section class="products">
         <h2>Top Products</h2>
-        <ul class="product-list">
+
+        <template id="product-list-template">
+          <ul class="product-list">
+            <li class="product-card">
+              <a href="">
+                <img
+                  src=""
+                  alt=""
+                />
+                <h3 class="card__brand"></h3>
+                <h2 class="card__name"></h2>
+                <p class="product-card__price"></p>
+              </a>
+            </li>
+          </ul>
+        </template>
+
+        <div id="product-list-container"></div>
+
+        <!-- <ul class="product-list">
+
           <li class="product-card">
             <a href="product_pages/product_page.html?productId=880RT">
               <img
@@ -106,13 +126,15 @@
               <h2 class="card__name">Rimrock Tent - 2-Person, 3-Season</h2>
               <p class="product-card__price">$69.99</p>
             </a>
-          </li>
-        </ul>
+          </li> 
+        </ul> -->
       </section>
     </main>
     <footer>
       &copy;2025 ⛺ SleepOutside ⛺ WDD 330 ⛺ BYU-Idaho for BYU-Pathway
       Worldwide Online
     </footer>
+
+    <script src="./js/product-list.js"></script>
   </body>
 </html>
