@@ -241,6 +241,15 @@
     grid-column: 3;
   }
 
+  .total-price-container{
+    margin: 20px;
+  }
+
+  .total-price{
+    text-align: center;
+    font-weight: bold;
+  }
+
   @media screen and (min-width: 500px) {
     body {
       max-width: 1080px;
