@@ -22,10 +22,10 @@ function cartItemTemplate(item) {
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 
+
 const cartItems = getLocalStorage("so-cart");
 const itemsPrices = cartItems.map((item) => item.FinalPrice);
 console.log(itemsPrices);
-
 let total = 0;
 itemsPrices.forEach(prices => {
   total += prices
@@ -39,20 +39,5 @@ const showTotal = document.querySelector(".total-price-container").innerHTML = `
 
   return newItem;
 }
-
-// function CalcTotalPRice(item){
-//   let CalcTotalPrice = 0;
-
-//   item.forEach(ItemPrice => {
-//     document.querySelector(".total-price-container").innerHTML = `
-//       <p class="total-price">
-        
-//       </p>  
-//   `;
-//   });
-
-
-// }
-// CalcTotalPRice();
 
 renderCartContents();
