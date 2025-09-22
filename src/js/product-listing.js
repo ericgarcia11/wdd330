@@ -2,7 +2,7 @@
 const template = document.getElementById("product-list-template");
 const contaier = document.getElementById("product-list-container");
 
-function renderListWithTemplate(){
+function buildTamplateList(){
     fetch("/json/tents.json")
     .then(response => response.json())
     .then(data => {
@@ -24,4 +24,5 @@ function renderListWithTemplate(){
     });
 };
 
-renderListWithTemplate();
+buildTamplateList();
+
