@@ -1,4 +1,4 @@
-  :root {
+:root {
     --font-body: Arial, Helvetica, sans-serif;
     --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
     /* colors */
@@ -114,6 +114,22 @@
     border-bottom: 2px solid var(--primary-color);
   }
 
+  .category-selector{
+    display: flex;
+    justify-content: center;
+    gap: 2.2rem;
+    margin-top: 50px;
+    padding: 10px;
+  }
+
+  .category-selector a img{
+    width: 150px;
+  }
+
+  .category-selector a img:hover{
+    transform: translateY(-2%);
+  }
+
   /* End utility classes */
 
   /* Cart icon styles */
@@ -124,7 +140,7 @@
   }
 
   .cart svg {
-    width: 25px;
+    width: 45px;
   }
 
   .cart:hover svg {

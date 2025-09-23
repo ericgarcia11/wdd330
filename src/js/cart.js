@@ -3,6 +3,7 @@ import { getLocalStorage } from "./utils.mjs";
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  // document.getElementById("svg-text").textContent = itemsPrices.length;
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
