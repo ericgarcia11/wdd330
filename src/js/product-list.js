@@ -1,3 +1,4 @@
+// import { searchByCategoty } from "./by-category";
 
 const template = document.getElementById("product-list-template");
 const contaier = document.getElementById("product-list-container");
@@ -21,3 +22,4 @@ fetch("/json/tents.json")
             contaier.appendChild(clone);
         });    
     });
+
