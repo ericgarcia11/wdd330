@@ -59,5 +59,3 @@ export async function searchById(productId) {
       console.error("Error");
   }
 };
-
-//${baseURL}product/${id}
