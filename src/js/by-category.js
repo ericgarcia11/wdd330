@@ -1,23 +1,8 @@
-const baseURL = import.meta.env.VITE_SERVER_URL;
+import { searchByCategoty } from "./ProductData.mjs";
+
 const params = new URLSearchParams(window.location.search);
 const category = params.get("category");
 
-async function searchByCategoty(category){
-    try{
-        let response = await fetch(`${baseURL}products/search/${category}`);
-        
-        if (!response.ok){
-            throw new Error(`Resquest error: ${response.status}`)
-        }
-
-        let data = await response.json();
-        console.log(data);
-
-        return data.Result;
-    } catch(error){
-        console.error("Error");
-    }
-};
 
 async function buildTemplateByCategory(category){
     const products = await searchByCategoty(category);
@@ -28,7 +13,7 @@ async function buildTemplateByCategory(category){
         const clone = template.content.cloneNode(true);
         const [a, img, h3, h2, p] = clone.querySelectorAll("a, img, h3, h2, p");
 
-        a.href = `../product_pages/product_page.html?productId=${product.Id}`;
+        a.href = `/product_pages/product_page.html?productId=${product.Id}`;
         img.src = product.Images.PrimaryMedium;
         img.alt = product.Brand.Name;
         h3.textContent = product.Brand.Name;

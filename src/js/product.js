@@ -6,19 +6,19 @@ const dataSource = new ProductData("tents");
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("productId");
 
-dataSource.getData().then((productsData) => {
-  // eslint-disable-next-line no-console
-  productsData.forEach(product => {
-    if (product.Id == productId){
-      createProduct(product);
+// dataSource.getData().then((productsData) => {
+//   // eslint-disable-next-line no-console
+//   productsData.forEach(product => {
+//     if (product.Id == productId){
+//       createProduct(product);
 
-      // add listener to Add to Cart button
-      document
-        .getElementById("addToCart")
-        .addEventListener("click", addToCartHandler);
-    }
-  });
-});
+//       // add listener to Add to Cart button
+//       document
+//         .getElementById("addToCart")
+//         .addEventListener("click", addToCartHandler);
+//     }
+//   });
+// });
 
 function createProduct(product){
   const productDetail = document.querySelector(".product-detail");
