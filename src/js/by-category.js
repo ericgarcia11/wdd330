@@ -14,7 +14,7 @@ async function buildTemplateByCategory(category){
         const [a, img, h3, h2, p] = clone.querySelectorAll("a, img, h3, h2, p");
 
         a.href = `/product_pages/product_page.html?productId=${product.Id}`;
-        img.src = product.Images.PrimaryMedium;
+        img.src = product.Images.PrimaryLarge;
         img.alt = product.Brand.Name;
         h3.textContent = product.Brand.Name;
         h2.textContent = product.NameWithoutBrand;

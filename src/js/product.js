@@ -2,10 +2,7 @@ import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import { searchById } from "./ProductData.mjs";
 
-const dataSource = new ProductData("tents");
-
-const params = new URLSearchParams(window.location.search);
-const productId = params.get("productId");
+// const dataSource = new ProductData("tents");
 
 // dataSource.getData().then((productsData) => {
 //   // eslint-disable-next-line no-console
@@ -58,6 +55,9 @@ const productId = params.get("productId");
 //   productDetail.appendChild(div);
 // }
 
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("productId");
+
 async function buildDetails(product) {
   let products = await searchById(product);
   const template = document.getElementById("product-detail-template");
@@ -72,12 +72,13 @@ async function buildDetails(product) {
   img.src = products.Images.PrimaryExtraLarge;
   img.alt = products.NameWithoutBrand;
 
-  clone.querySelector(".product-card__price").textContent = products.ListPrice;
+  clone.querySelector(".product-card__price").innerHTML = `<strong>$${products.ListPrice}</strong>`;
   clone.querySelector(".product__color").textContent = products.Colors[0].ColorName;
   clone.querySelector(".product__description").innerHTML = products.DescriptionHtmlSimple;
 
-  const button = clone.querySelector("#addToCart");
+  const button = clone.getElementById("addToCart");
   button.dataset.id = products.Id;
+  button.addEventListener("click", addToCartHandler);
 
   container.appendChild(clone);
 }
@@ -90,9 +91,15 @@ function addProductToCart(product) {
   cardItems.push(product);
   setLocalStorage("so-cart", cardItems);
 }
+
 // add to cart button event handler
+// async function addToCartHandler(e) {
+//   const product = await dataSource.findProductById(e.target.dataset.id);
+//   addProductToCart(product);
+// }
+
 async function addToCartHandler(e) {
-  const product = await dataSource.findProductById(e.target.dataset.id);
+  const productId = e.target.dataset.id;
+  const product = await searchById(productId);
   addProductToCart(product);
 }
-
