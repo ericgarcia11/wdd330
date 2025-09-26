@@ -1,10 +1,28 @@
 import { getLocalStorage } from "./utils.mjs";
 
+function checkNull(){
+  try{
+    const cartItems = getLocalStorage("so-cart");
+    const cartEmptyWarning = document.getElementById("cart-is-empty");
+    if (!cartItems || cartItems.length == 0){
+      cartEmptyWarning.classList.remove("hide");
+    }
+  } catch (error){
+    console.error(`ERROR CHECKING: ${error}`)
+  }
+}
+
+checkNull();
 
 export function qtdInCart(){
-  const cartItems = getLocalStorage("so-cart");
-  const itemsPrices = cartItems.map((item) => item.FinalPrice);
-  document.getElementById("svg-text").textContent = itemsPrices.length;
+  try{
+    const cartItems = getLocalStorage("so-cart");
+    const itemsPrices = cartItems.map((item) => item.FinalPrice);
+    document.getElementById("svg-text").textContent = itemsPrices.length;
+
+  } catch (error){
+    console.error(`FREAK BRO: ${error}`)
+  };
 };
 qtdInCart();
 
