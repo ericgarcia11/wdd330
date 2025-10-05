@@ -1,6 +1,10 @@
-import { setLocalStorage, getLocalStorage } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import { setLocalStorage, getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+// import ProductData from "./ProductData.mjs";
 import { searchById } from "./ProductData.mjs";
+import ProductData from "../js/ProductData.mjs";
+
+// eslint-disable-next-line no-console
+// console.log("aqui");
 
 // const dataSource = new ProductData("tents");
 
@@ -56,10 +60,17 @@ import { searchById } from "./ProductData.mjs";
 // }
 
 const params = new URLSearchParams(window.location.search);
-const productId = params.get("productId");
+let productId = params.get("productId");
+let categoryName = params.get("category");
 
-async function buildDetails(product) {
-  let products = await searchById(product);
+async function buildDetails(product, category) {
+  const dataSource = new ProductData(category);
+  const dados = await dataSource.getData();
+
+  let products = await searchById(product, dados);
+  // eslint-disable-next-line no-console
+  // console.log(products);
+
   const template = document.getElementById("product-detail-template");
   const container = document.querySelector(".product-detail-container"); 
 
@@ -69,26 +80,44 @@ async function buildDetails(product) {
   clone.querySelector(".product__name").textContent = products.NameWithoutBrand;
 
   const img = clone.querySelector(".product__image");
-  img.src = products.Images.PrimaryExtraLarge;
+  img.src = products.Image;
   img.alt = products.NameWithoutBrand;
 
   clone.querySelector(".product-card__price").innerHTML = `<strong>$${products.ListPrice}</strong>`;
   clone.querySelector(".product__color").textContent = products.Colors[0].ColorName;
   clone.querySelector(".product__description").innerHTML = products.DescriptionHtmlSimple;
 
-  const button = clone.getElementById("addToCart");
+  const button = clone.querySelector(".addToCart");
   button.dataset.id = products.Id;
-  button.addEventListener("click", addToCartHandler);
+  const data = await dataSource.getData();
+  // eslint-disable-next-line no-console
+  console.log(data);
 
+  button.addEventListener("click", async function(e){
+    await addToCartHandler(e,data);
+  });
+ 
   container.appendChild(clone);
 }
 
-buildDetails(productId);
+// document.querySelectorAll(".addToCart").forEach(btn => {
+//   btn.dataset.id = products.Id;
+//   btn.addEventListener("click", async function() {
+//     await addToCartHandler();
+//   });
+// });
+
+buildDetails(productId, categoryName);
 
 
 function addProductToCart(product) {
   const cardItems = getLocalStorage("so-cart") || [];
-  cardItems.push(product);
+
+  const idCart = cardItems.length > 0 
+    ? cardItems[cardItems.length - 1].id + 1 
+    : 0;
+
+  cardItems.push({id: idCart, product: product});
   setLocalStorage("so-cart", cardItems);
 }
 
@@ -98,8 +127,12 @@ function addProductToCart(product) {
 //   addProductToCart(product);
 // }
 
-async function addToCartHandler(e) {
-  const productId = e.target.dataset.id;
-  const product = await searchById(productId);
+async function addToCartHandler(e, data) {
+  productId = e.target.dataset.id;
+  // eslint-disable-next-line no-console
+  // console.log(productId);
+  const product = await searchById(productId, data);
   addProductToCart(product);
 }
+
+loadHeaderFooter();

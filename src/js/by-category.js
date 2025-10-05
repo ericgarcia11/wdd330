@@ -4,8 +4,8 @@ const params = new URLSearchParams(window.location.search);
 const category = params.get("category");
 
 
-async function buildTemplateByCategory(category){
-    const products = await searchByCategoty(category);
+async function buildTemplateByCategory(categoryData){
+    const products = await searchByCategoty(categoryData);
     const template = document.getElementById("product-list-template");
     const contaier = document.getElementById("product-list-container");
 

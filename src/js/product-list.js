@@ -6,7 +6,7 @@ const contaier = document.getElementById("product-list-container");
 fetch("/json/tents.json")
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         
         data.forEach(product => {
             const clone = template.content.cloneNode(true);

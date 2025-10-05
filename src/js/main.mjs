@@ -1,3 +1,6 @@
-import { qtdInCart } from "./cart";
+// import { qtdInCart } from "./cart";
+import { loadHeaderFooter } from "../js/utils.mjs";
 
-qtdInCart();
+// qtdInCart();
+
+loadHeaderFooter();

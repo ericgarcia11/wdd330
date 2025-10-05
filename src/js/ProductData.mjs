@@ -19,6 +19,13 @@ export default class ProductData {
       .then(convertToJson)
       .then((data) => data);
   }
+  // constructor() {
+  // }
+  // async getData(category) {
+  //   const response = await fetch(`${baseURL}products/search/${category} `);
+  //   const data = await convertToJson(response);
+  //   return data.Result;
+  // }
   async findProductById(id) {
     const products = await this.getData();
     return products.find((item) => item.Id === id);
@@ -35,27 +42,23 @@ export async function searchByCategoty(category){
         }
 
         let data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         return data.Result;
     } catch(error){
-        console.error("Error");
+        return null;
     }
 };
 
-export async function searchById(productId) {
+export async function searchById(productId, data) {
   try{
-    let response = await fetch(`${baseURL}product/${productId}`);
-        
-    if (!response.ok){
-      throw new Error(`Resquest error: ${response.status}`)
-    }
-
-    let data = await response.json();
-      console.log(data);
-
-      return data.Result;
+    // // eslint-disable-next-line no-console
+    // console.log(data);
+    let product = data.filter(p => p.Id == productId);
+    return product[0];
   } catch(error){
-      console.error("Error");
+      // console.error("Error");
+      return null;
   }
 };
+

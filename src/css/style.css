@@ -337,3 +337,9 @@
     font-size: var(--small-font);
     padding: 1em;
   }
+
+  .delete-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: black; /* muda a cor do ícone */
+}
