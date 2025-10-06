@@ -21,7 +21,7 @@ export default class CheckoutProcess {
     }
     calculateSubtotal(){
         const cartItems = getLocalStorage("so-cart");
-        const itemsPrices = cartItems.map((item1) => item1.product.FinalPrice);
+        const itemsPrices = cartItems.map((item1) => item1.product.FinalPrice * item1.quantity);
         this.itemsPrices = itemsPrices;
         // console.log(itemsPrices);
         let subtotal = 0;
@@ -34,10 +34,14 @@ export default class CheckoutProcess {
         this.tax = (this.itemTotal / 100) * 6;
     }
     calculateShipping(){
-        this.shipping = ((this.itemsPrices.length - 1) * 2) + 10;
+        if (this.itemsPrices.length == 0){
+            this.shipping = 0;
+        } else {
+            this.shipping = ((this.itemsPrices.length - 1) * 2) + 10;
+        }
     }
     calculateTotal(){
-        this.orderTotal =  this.itemTotal + this.tax + this.shipping;
+        this.orderTotal =  (this.itemTotal + this.tax + this.shipping).toFixed(2);
     }
     calculateItemSummary(){
         this.calculateSubtotal();
@@ -122,14 +126,19 @@ export async function checkout(formElemen){
         body: JSON.stringify(payload)
     }
     fetch(baseURL, options)
-    .then(response => response.json()) // transforma o resultado em JSON
+  .then(async response => {
+        const jsonResponse = await response.json();
+        if (response.ok) {
+        return jsonResponse;
+        } else {
+            throw { name: "servicesError", message: jsonResponse };
+        }
+    })
     .then(data => {
-        // eslint-disable-next-line no-console
-        console.log(data);
+        alert("Order requested successfully!!");
     })
     .catch(error => {
-        // eslint-disable-next-line no-console
-        console.error("Erro na requisição:", error);
+        alert("Error:", error.name, error.message);
     });
 
 }

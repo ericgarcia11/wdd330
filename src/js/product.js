@@ -116,8 +116,22 @@ function addProductToCart(product) {
   const idCart = cardItems.length > 0 
     ? cardItems[cardItems.length - 1].id + 1 
     : 0;
+  var alreadExists = false;
+  cardItems.forEach(el => {
+    if (el.product.Id === product.Id){
+      el.quantity += 1;
+      alreadExists = true;
+    }
+  });
+  
+  if (!alreadExists){
+    cardItems.push({
+      id: idCart, 
+      product: product, 
+      quantity: 1
+    });
+  } 
 
-  cardItems.push({id: idCart, product: product});
   setLocalStorage("so-cart", cardItems);
 }
 
