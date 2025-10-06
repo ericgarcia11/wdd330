@@ -1,4 +1,4 @@
-import { searchByCategoty } from "./ProductData.mjs";
+import { searchByCategoty } from "./ExternalServices.mjs";
 
 const params = new URLSearchParams(window.location.search);
 const category = params.get("category");

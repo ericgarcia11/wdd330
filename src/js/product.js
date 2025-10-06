@@ -1,12 +1,12 @@
 import { setLocalStorage, getLocalStorage, loadHeaderFooter } from "./utils.mjs";
-// import ProductData from "./ProductData.mjs";
-import { searchById } from "./ProductData.mjs";
-import ProductData from "../js/ProductData.mjs";
+// import ExternalServices from "./ExternalServices.mjs";
+import { searchById } from "./ExternalServices.mjs";
+import ExternalServices from "../js/ExternalServices.mjs";
 
 // eslint-disable-next-line no-console
 // console.log("aqui");
 
-// const dataSource = new ProductData("tents");
+// const dataSource = new ExternalServices("tents");
 
 // dataSource.getData().then((productsData) => {
 //   // eslint-disable-next-line no-console
@@ -64,7 +64,7 @@ let productId = params.get("productId");
 let categoryName = params.get("category");
 
 async function buildDetails(product, category) {
-  const dataSource = new ProductData(category);
+  const dataSource = new ExternalServices(category);
   const dados = await dataSource.getData();
 
   let products = await searchById(product, dados);
