@@ -106,6 +106,10 @@ document.addEventListener("DOMContentLoaded", function(){
   });
 })
 
+document.getElementById("checkout-btn").addEventListener("click", function(){
+  window.location.href = "../../checkout/index.html";
+})
+
 renderCartContents();
 
 loadHeaderFooter();
