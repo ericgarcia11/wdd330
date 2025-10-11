@@ -1,5 +1,5 @@
 // import { qtdInCart } from "./cart";
-import { loadHeaderFooter ,getLocalStorage} from "../js/utils.mjs";
+import { loadHeaderFooter ,getLocalStorage, alertMessage} from "../js/utils.mjs";
 const baseURL = `${import.meta.env.VITE_SERVER_URL}checkout`;
 // eslint-disable-next-line no-console
 // console.log(baseURL);
@@ -129,16 +129,20 @@ export async function checkout(formElemen){
   .then(async response => {
         const jsonResponse = await response.json();
         if (response.ok) {
-        return jsonResponse;
+            return jsonResponse;
         } else {
             throw { name: "servicesError", message: jsonResponse };
         }
     })
-    .then(data => {
-        alert("Order requested successfully!!");
+    .then(() =>{
+        localStorage.removeItem("so-cart");
+        window.location.href("success.html");
     })
-    .catch(error => {
-        alert("Error:", error.name, error.message);
+    .catch(async(error) => {
+        // eslint-disable-next-line no-console
+        console.log();
+        const messageError = (`Error:  ${error.name}.`);
+        await alertMessage(messageError);
     });
 
 }

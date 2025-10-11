@@ -458,3 +458,12 @@ input:focus {
     grid-template-columns: 1fr;
   }
 }
+
+.alert{
+  padding: 1rem;
+  background: #ffcc70;
+  font-weight: bold;
+  border: none;
+  margin: .5rem;
+  width: 50%;
+}
