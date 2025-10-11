@@ -13,7 +13,8 @@ export default defineConfig({
         home: resolve(__dirname, "src/home/index.html"),
         clients: resolve(__dirname, "src/clients/index.html"),
         product: resolve(__dirname, "src/products/index.html"),
-        orders: resolve (__dirname, "src/orders/index.html")
+        orders: resolve (__dirname, "src/orders/index.html"),
+        signin: resolve (__dirname, "src/signin/index.html")
       },
     },
   },
