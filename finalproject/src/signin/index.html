@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Management</title>
+  </head>
+  <body class="bg-light">
+
+  <div class="container vh-100 d-flex justify-content-center align-items-center" id="containerLogin" style="display: none;">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-4">Sign-in</h3>
+
+        <form id="signinForm">
+          <div class="mb-3">
+            <label for="username" class="form-label">Name</label>
+            <input type="text" class="form-control" id="username" autocomplete="name" placeholder="Type your first and last name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Type your email" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="password" placeholder="Create your password" required>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Create account</button>
+          </div>
+        </form>
+        <div id="signinBtn" class="text-center mt-3">
+            <a href="../">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script type="module" src="../scripts/signin.js"></script>
+</html>

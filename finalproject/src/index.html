@@ -2,23 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="../src/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="scripts/main.js"></script>
     <title>Store Management</title>
   </head>
-  <body>
-      <main>
-          <div class="loginForm">
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label">Example label</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
-              </div>
-              <div class="mb-3">
-                <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
-              </div>
-          </div>
-      </main>
+  <body class="bg-light">
+    <div class="container vh-100 d-flex justify-content-center align-items-center" id="containerLogin" style="display: none;">
+        <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Login</h3>
+
+            <form id="loginForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Type your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="password" placeholder="Type your password" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Enter</button>
+            </div>
+            </form>
+
+            <div id="signinBtn" class="text-center mt-3">
+            <a href="signin/">Sign-in</a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- modal to loading, animation -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4" style="background: transparent; border: none;">
+                <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
-  
