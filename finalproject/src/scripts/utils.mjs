@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import Product from "./products.mjs";
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
@@ -57,7 +58,6 @@ export function loadHeader(){
     }
 }
 
-
 async function updateProfile(user, users){
     const result = await Swal.fire({
     title: 'Update your profile:',
@@ -98,4 +98,33 @@ async function updateProfile(user, users){
       return;
     }
   });
+}
+
+export function getActiveUser(){
+    const users = getLocalStorage('users');
+    let user = users.find(user => user.active === true);
+    return user;
+}
+
+export async function getProducts(){
+    let user = getActiveUser();
+    let products = getLocalStorage('products');
+    if (!products || products.length === 0){
+        products = [];
+        const response = await fetch('https://fakestoreapi.com/products')
+        const data = await response.json();
+        let products_items = data.map(product => new Product(product));
+        products.push(
+            {
+                user_id : user.id,
+                products : products_items
+            }
+        );
+        setLocalStorage('products', products);
+        let productsActiveUser = products.find(productData => productData.user_id === user.id);
+        return productsActiveUser;
+    } else {
+        let productsActiveUser = products.find(productData => productData.user_id === user.id);
+        return productsActiveUser;
+    }
 }

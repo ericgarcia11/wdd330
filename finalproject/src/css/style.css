@@ -15,6 +15,9 @@
     background-color: #0d1321;
     color: white;
     height: 12vh;
+    flex-wrap: wrap;
+    min-height: fit-content;
+    gap: 1rem;
   }
 
   & button, nav a{
@@ -38,4 +41,29 @@
   & .card:hover {
     transform: translateY(-4px);
   }
+
+  & #productsCardsContainer{
+    gap: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  & .carroselContainer{
+    display: flex;
+    justify-content: center;
+    padding: 1rem 6rem;
+    color: white;
+  }
+
+ & #productsListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    & button{
+      background: green;
+      border: none;
+    }
+ }
 }

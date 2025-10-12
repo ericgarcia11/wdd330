@@ -37,9 +37,12 @@ signinForm.addEventListener('submit', async (e) => {
             'email'     : email,
             'password'  : password
         };
-      if (users){
+      if (users && users.length > 0){
+        let id = users[users.length - 1].id + 1;
+        userData.id = id;
         users.push(userData);
       } else {
+        userData.id = 1;
         users = [userData];
       }
       setLocalStorage('users', users);
