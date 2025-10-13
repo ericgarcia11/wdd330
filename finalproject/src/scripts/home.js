@@ -4,15 +4,18 @@ import * as bootstrap from 'bootstrap';
 import Swal from 'sweetalert2';
 import introJs from 'intro.js';
 import 'intro.js/introjs.css';
-import { getLocalStorage, setLocalStorage, loadHeader, getProducts} from './utils.mjs';
+import { getLocalStorage, setLocalStorage, loadHeader, getProducts, getClients} from './utils.mjs';
 
-const totalClientes = 54;
 const totalPedidos = 132;
 const productsData = await getProducts();
 let products = productsData.products;
 const totalProducts = products.length;
 
-document.getElementById("totalClients").textContent = totalClientes;
+const clientsData = await getClients();
+let clients = clientsData.clients;
+const totalClients = clients.length;
+
+document.getElementById("totalClients").textContent = totalClients;
 document.getElementById("totalOrders").textContent = totalPedidos;
 document.getElementById("totalProducts").textContent = totalProducts;
 

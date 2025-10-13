@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import Product from "./products.mjs";
+import Client from "./clients.mjs";
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
@@ -126,5 +127,38 @@ export async function getProducts(){
     } else {
         let productsActiveUser = products.find(productData => productData.user_id === user.id);
         return productsActiveUser;
+    }
+}
+
+export async function getClients(){
+    let user = getActiveUser();
+    let clientsAll = getLocalStorage('clients');
+    if (!clientsAll || clientsAll.length === 0){
+        clientsAll = [];
+        const response = await fetch('https://fakestoreapi.com/users')
+        const data = await response.json();
+        let id = 0;
+        let clients = data.map(client => 
+            new Client({
+                    id: id+=1,
+                    name : `${client.name.firstname} ${client.name.lastname}`,
+                    phone : client.phone,
+                    address : `${client.address.number} ${client.address.street}, ${client.address.city}, ${client.address.zipcode}`,
+                    email : client.email
+                })
+            );
+
+        clientsAll.push(
+            {
+                user_id : user.id,
+                clients : clients
+            }
+        );
+        setLocalStorage('clients', clientsAll);
+        let clientsActiveUser = clientsAll.find(clientsData => clientsData.user_id === user.id);
+        return clientsActiveUser;
+    } else {
+        let clientsActiveUser = clientsAll.find(clientsData => clientsData.user_id === user.id);
+        return clientsActiveUser;
     }
 }
