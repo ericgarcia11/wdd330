@@ -125,8 +125,24 @@ export async function getProducts(){
         let productsActiveUser = products.find(productData => productData.user_id === user.id);
         return productsActiveUser;
     } else {
-        let productsActiveUser = products.find(productData => productData.user_id === user.id);
-        return productsActiveUser;
+        const productsUser = products.find(productsUser => productsUser.user_id === user.id);
+        if (!productsUser){
+            const response = await fetch('https://fakestoreapi.com/products')
+            const data = await response.json();
+            let products_items = data.map(product => new Product(product));
+            products.push(
+                {
+                    user_id : user.id,
+                    products : products_items
+                }
+            );
+            setLocalStorage('products', products);
+            let productsActiveUser = products.find(productData => productData.user_id === user.id);
+            return productsActiveUser;
+        } else {
+            let productsActiveUser = products.find(productData => productData.user_id === user.id);
+            return productsActiveUser;
+        }
     }
 }
 
@@ -158,7 +174,32 @@ export async function getClients(){
         let clientsActiveUser = clientsAll.find(clientsData => clientsData.user_id === user.id);
         return clientsActiveUser;
     } else {
-        let clientsActiveUser = clientsAll.find(clientsData => clientsData.user_id === user.id);
-        return clientsActiveUser;
+        const clientsUser = clientsAll.find(clientsUser => clientsUser.user_id === user.id);
+        if (!clientsUser){
+            const response = await fetch('https://fakestoreapi.com/users')
+            const data = await response.json();
+            let id = 0;
+            let clients_items = data.map(client => new Client({
+                    id: id+=1,
+                    name : `${client.name.firstname} ${client.name.lastname}`,
+                    phone : client.phone,
+                    address : `${client.address.number} ${client.address.street}, ${client.address.city}, ${client.address.zipcode}`,
+                    email : client.email
+                })
+            );
+
+            clientsAll.push(
+                {
+                    user_id : user.id,
+                    clients : clients_items
+                }
+            );
+            setLocalStorage('clients', clientsAll);
+            let clientsActiveUser = clientsAll.find(clientsData => clientsData.user_id === user.id);
+            return clientsActiveUser;
+        } else {
+            let clientsActiveUser = clientsAll.find(clientsData => clientsData.user_id === user.id);
+            return clientsActiveUser;
+        }
     }
 }
