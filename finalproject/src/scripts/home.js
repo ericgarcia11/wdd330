@@ -6,9 +6,9 @@ import introJs from 'intro.js';
 import 'intro.js/introjs.css';
 import { getLocalStorage, setLocalStorage, loadHeader, getProducts, getClients} from './utils.mjs';
 
-loadHeader();
+await loadHeader();
 
-const totalPedidos = 132;
+// const totalPedidos = 132;
 const productsData = await getProducts();
 let products = productsData.products;
 const totalProducts = products.length;
@@ -18,5 +18,5 @@ let clients = clientsData.clients;
 const totalClients = clients.length;
 
 document.getElementById("totalClients").textContent = totalClients;
-document.getElementById("totalOrders").textContent = totalPedidos;
 document.getElementById("totalProducts").textContent = totalProducts;
+

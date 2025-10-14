@@ -35,7 +35,9 @@ signinForm.addEventListener('submit', async (e) => {
             'token'     : data.token,
             'username'  : username,
             'email'     : email,
-            'password'  : password
+            'password'  : password,
+            'country'   : 'United States',
+            'currency'  : 'USD'
         };
       if (users && users.length > 0){
         let id = users[users.length - 1].id + 1;

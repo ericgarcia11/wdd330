@@ -11,7 +11,7 @@ export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-export function loadHeader(){
+export async function loadHeader(){
     let users = getLocalStorage('users');
     if (!users){
         window.location.href = "../";
@@ -20,19 +20,79 @@ export function loadHeader(){
     if (!user){
         window.location.href = "../";
     } else {
+        let headerSelect = '';
+        const countryRes = await fetch(`https://restcountries.com/v3.1/all?fields=name,currencies`);
+        const countries = await countryRes.json();
+        countries.forEach(country => {
+            if (country.name.common.toLowerCase() === user.country.toLowerCase()){
+                headerSelect += `<option value="${Object.keys(country.currencies)[0]}" selected>${country.name.common}</option>`;
+            } else {
+                headerSelect += `<option value="${Object.keys(country.currencies)[0]}">${country.name.common}</option>`;
+            }
+        });
+
         document.getElementById('header').innerHTML = `
                 <header class="d-flex justify-content-between align-items-center px-4 py-3">
                 <button class="btn btn-light btn-sm" id="btnPerfil">
                     <i class="bi bi-person-circle me-2"></i> ${user.username}
                 </button>
-                <nav>
-                    <a href="../home/" class="btn btn-outline-light btn-sm me-2">Home</a>
-                    <a href="../products/" class="btn btn-outline-light btn-sm me-2">Products</a>
-                    <a href="../clients/" class="btn btn-outline-light btn-sm me-2">Clients</a>
-                    <a href="../orders/" class="btn btn-outline-light btn-sm">Orders</a>
-                </nav>
+                <div>
+                    <nav>
+                        <a href="../home/" class="btn btn-outline-light btn-sm me-2">Home</a>
+                        <a href="../products/" class="btn btn-outline-light btn-sm me-2">Products</a>
+                        <a href="../clients/" class="btn btn-outline-light btn-sm me-2">Clients</a>
+                        <a  class="btn btn-outline-light btn-sm me-2 exchangeValue"><strong>Exchange: </strong></a>
+                    </nav>
+                    <select class="form-select" aria-label="Default select example">
+                        ${headerSelect}
+                    </select>
+                </div>
                 </header>
             `;
+
+        headerSelect = document.getElementById('header')
+            .querySelector('div')
+            .querySelector('select');
+
+        resizeSelect(headerSelect)
+        
+        headerSelect.addEventListener('change', async function(){
+            user.country = headerSelect.options[headerSelect.selectedIndex].textContent;
+            user.currency = headerSelect.options[headerSelect.selectedIndex].value;
+            let users = getLocalStorage('users');
+            users = users.map(user1 => {
+                if (user1.email === user.email){
+                    return user;
+                } else {
+                    return user1;
+                }
+            })
+            setLocalStorage('users', users);
+            await resizeSelect(headerSelect);
+        })
+
+        async function resizeSelect(headerSelect){
+            const temp = document.createElement('span');
+            temp.style.visibility = 'hidden';
+            temp.style.whiteSpace = 'nowrap';
+            temp.style.font = window.getComputedStyle(headerSelect).font;
+            temp.textContent = headerSelect.options[headerSelect.selectedIndex].text;
+
+            document.body.appendChild(temp);
+            const newWidth = temp.offsetWidth + 100; // margem pro botãozinho ▼
+            document.body.removeChild(temp);
+
+            headerSelect.style.width = `${newWidth}px`;
+
+            let user = getActiveUser();
+            const convertedAmount = await convert("USD", user.currency, 1);
+            if (convertedAmount){
+                document.querySelector('.exchangeValue').innerHTML = `<strong>(USD) $1 = $${convertedAmount} (${user.currency}) `;
+            } else {
+                document.querySelector('.exchangeValue').textContent = 'Exchange not available';
+            }
+        }
+        
         document.getElementById("btnPerfil").addEventListener("click", async () => {
             const result = await Swal.fire({
                 title: 'What would you like to do?',
@@ -57,6 +117,16 @@ export function loadHeader(){
             }
         });   
     }
+}
+
+async function convert(from, to, amount) {
+  return fetch(`https://api.frankfurter.dev/v1/latest?base=${from}&symbols=${to}`)
+    .then(resp => resp.json())
+    .then(data => data.rates[to].toFixed(2))
+    .catch(err => {
+      console.error(err); 
+      return null;
+    });
 }
 
 async function updateProfile(user, users){
